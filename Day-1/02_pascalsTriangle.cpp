@@ -1,22 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include <vector>
-using namespace std;
-vector<vector<int>> generate(int numRows) {
-    vector<vector<int>> result;
-    for (int i = 0; i < numRows; ++i) {
-        vector<int> row(i + 1, 1);
-        for (int j = 1; j < i; ++j) {
-            row[j] = result[i - 1][j - 1] + result[i - 1][j];
-        }
-        result.push_back(row); 
+vector<int> generateRows(int row){
+    long long ans = 1;
+    vector<int> ansRow;
+    ansRow.push_back(1);
+
+    for(int i = 1; i<row; i++){
+        ans = ans*(row-i);
+        ans = ans/i;
+        ansRow.push_back(ans);
     }
-    return result;
+    return ansRow;
 }
 
-int main()
-{
+vector<vector<int>> generate(int numRows) {
+    vector<vector<int>> ans;
+
+    for(int i = 1; i<=numRows; i++){
+        ans.push_back(generateRows(i));
+    }
+    return ans;
+}
+int main(){
     int n = 5;
     cout<<"n is "<<n<<endl;
     vector<vector<int>> ans = generate(n);
